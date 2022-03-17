@@ -13,14 +13,23 @@
 
     <script>
     // REPLACE WITH YOUR web app's Firebase configuration
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyBinHXnGhGlzlqho5nPnjRe9h-jbYC-lCk",
+    //   authDomain: "maison-89f51.firebaseapp.com",
+    //   databaseURL: "https://maison-89f51-default-rtdb.europe-west1.firebasedatabase.app",
+    //   projectId: "maison-89f51",
+    //   storageBucket: "maison-89f51.appspot.com",
+    //   messagingSenderId: "455334727203",
+    //   appId: "1:455334727203:web:15777d91713e2ec1af2b96"
+    // };
     const firebaseConfig = {
-      apiKey: "AIzaSyBinHXnGhGlzlqho5nPnjRe9h-jbYC-lCk",
-      authDomain: "maison-89f51.firebaseapp.com",
-      databaseURL: "https://maison-89f51-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "maison-89f51",
-      storageBucket: "maison-89f51.appspot.com",
-      messagingSenderId: "455334727203",
-      appId: "1:455334727203:web:15777d91713e2ec1af2b96"
+        apiKey: "AIzaSyAQVAi05r5gw-sBU_dcKLpQsDB6dzA01Ns",
+        authDomain: "maison-connectee-990b6.firebaseapp.com",
+        databaseURL: "https://maison-connectee-990b6-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "maison-connectee-990b6",
+        storageBucket: "maison-connectee-990b6.appspot.com",
+        messagingSenderId: "307163068110",
+        appId: "1:307163068110:web:b14f444850c54c8180429f"
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
@@ -34,5 +43,6 @@
     <button type="submit" id="on-off-led">Led ON/OFF</button>
     <p>Reading temperature: <span id="reading-temperature"></span></p>
     <p>Reading humidity: <span id="reading-humidity"></span></p>
+    <p>Reading led: <span id="reading-led"></span></p>
 </body>
 </html>

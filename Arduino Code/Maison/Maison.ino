@@ -23,14 +23,14 @@
 #include "addons/RTDBHelper.h"
 
 // Insert your network credentials
-#define WIFI_SSID ":)"
-#define WIFI_PASSWORD "@Takoun2017"
+#define WIFI_SSID "momodiaby"
+#define WIFI_PASSWORD "mrlavilaine"
 
 // Insert Firebase project API Key
-#define API_KEY "AIzaSyAcpzwrgqDHy6TejEhrXU_RenysyNy83LM"
+#define API_KEY "AIzaSyAQVAi05r5gw-sBU_dcKLpQsDB6dzA01Ns"
 
 // Insert RTDB URLefine the RTDB URL */
-#define DATABASE_URL "https://esp32-firebase-demo-ef5c6-default-rtdb.firebaseio.com/" 
+#define DATABASE_URL "https://maison-connectee-990b6-default-rtdb.europe-west1.firebasedatabase.app/" 
 
 //Define Firebase Data object
 FirebaseData fbdo;
@@ -39,6 +39,7 @@ FirebaseAuth auth;
 FirebaseConfig config;
 
 unsigned long sendDataPrevMillis = 0;
+unsigned long readDataPrevMillis = 0;
 int count = 0;
 bool signupOK = false;
 
@@ -89,7 +90,19 @@ void setup()
 
 void loop()
 {
-  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 1000 || sendDataPrevMillis == 0)){
+  if (Firebase.ready() && signupOK && (millis() - readDataPrevMillis > 500 || readDataPrevMillis == 0)){
+    if (Firebase.RTDB.getInt(&fbdo, "test/led")) {
+      if (fbdo.dataType() == "int") {
+        int intValue = fbdo.intData();
+        Serial.println(intValue);
+        if (intValue)
+          digitalWrite(LED, HIGH);
+        else
+          digitalWrite(LED, LOW);
+      }
+    }
+  }
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 2000 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
     // Write an Int number on the database path test/int
     /*if (Firebase.RTDB.setInt(&fbdo, "test/int", count)){
@@ -102,16 +115,6 @@ void loop()
       Serial.println("REASON: " + fbdo.errorReason());
     }
     count++;*/
-    if (Firebase.RTDB.getInt(&fbdo, "test/led")) {
-      if (fbdo.dataType() == "int") {
-        int intValue = fbdo.intData();
-        Serial.println(intValue);
-        if (intValue)
-          digitalWrite(LED, HIGH);
-        else
-          digitalWrite(LED, LOW);
-      }
-    }
     // Write an Float number on the database path test/float
     DHT.read11(DHT_PIN);
     if (Firebase.RTDB.setFloat(&fbdo, "test/temperature", DHT.temperature)){

@@ -21,7 +21,7 @@ databaseTemperature.on('value', (snapshot) => {
   console.log('The read failed: ' + errorObject.name);
 });
 
-databaseTemperature.on('value', (snapshot) => {
+databaseHumidity.on('value', (snapshot) => {
   humidityReading = snapshot.val();
   console.log(humidityReading);
   document.getElementById("reading-humidity").innerHTML = humidityReading;
@@ -29,15 +29,23 @@ databaseTemperature.on('value', (snapshot) => {
   console.log('The read failed: ' + errorObject.name);
 });
 
-document.querySelector('#on-off-led').addEventListener("click", (event) => {
-  event.preventDefault();
-  databaseLed.set(1);
+document.getElementById('on-off-led').addEventListener("click", (event) => {
+  console.log("Click on button");
+  databaseLed.on('value', (snapshot) => {
+    if (snapshot.val() == 0)
+      databaseLed.set(1);
+    else
+      databaseLed.set(0);
+  }, (errorObject) => {
+    console.log('The read failed: ' + errorObject.name);
+  });
+  location.reload()
 });
 
-// databaseLed.on('value', (snapshot) => {
-//   ledReading = snapshot.val();
-//   console.log(ledReading);
-//   document.getElementById("reading-Led").innerHTML = ledReading;
-// }, (errorObject) => {
-//   console.log('The read failed: ' + errorObject.name);
-// });
+databaseLed.on('value', (snapshot) => {
+  ledReading = snapshot.val();
+  console.log(ledReading);
+  document.getElementById("reading-led").innerHTML = ledReading;
+}, (errorObject) => {
+  console.log('The read failed: ' + errorObject.name);
+});
